@@ -1,4 +1,5 @@
-import {Locator, Page} from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
+import { step } from "allure-js-commons";
 
 export class CreateAccountPage {
   readonly page: Page;
@@ -23,39 +24,57 @@ export class CreateAccountPage {
     this.changePhotoButton = this.page.getByRole('button', { name: 'Continue' });
   }
     async navigateToCreateAccountPage() {
-      await this.page.goto('/create-account');
+        await step('Navigate to create account page', async () => {
+            await this.page.goto('/create-account');
+        });
     }
 
   async fillFirstName(firstName: string) {
-      await this.firstNameInputField.fill(firstName);
+        await step('Fill first name', async () => {
+            await this.firstNameInputField.fill(firstName);
+        });
     }
 
     async fillLastName(lastName: string) {
-      await this.lastNameInputField.fill(lastName);
+        await step('Fill last name', async () => {
+            await this.lastNameInputField.fill(lastName);
+        });
     }
 
     async fillMiddleName(middleName: string) {
-      await this.middleNameInputField.fill(middleName);
+        await step('Fill middle name', async () => {
+            await this.middleNameInputField.fill(middleName);
+        });
     }
 
     async fillEmail(email: string) {
-      await this.emailInputField.fill(email);
+        await step('Fill email', async () => {
+            await this.emailInputField.fill(email);
+        });
     }
 
     async fillPhoneNumber(phoneNumber: string) {
-      await this.phoneNumberInputField.fill(phoneNumber);
+        await step('Fill phone number', async () => {
+            await this.phoneNumberInputField.fill(phoneNumber);
+        });
     }
 
     async clickContinueButton() {
-      await this.continueButton.click();
+        await step('Click Continue button', async () => {
+            await this.continueButton.click();
+        });
     }
 
     async clickChangePhotoButton() {
-      await this.changePhotoButton.click();
+        await step('Click Change photo button', async () => {
+            await this.changePhotoButton.click();
+        });
     }
 
     async clickLoginLink() {
-      await this.loginLink.click();
+        await step('Click Login link', async () => {
+            await this.loginLink.click();
+        });
     }
 
 

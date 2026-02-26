@@ -1,12 +1,12 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { step } from 'allure-js-commons';
 
-export class LegalManagementPage {
+export class PropertyManagementPage {
     readonly page: Page;
     readonly setups: Locator;
     readonly setupItems: Locator;
     readonly search: Locator;
-    readonly addCaseTypeButton: Locator;
+    readonly addGenderButton: Locator;
     readonly addGenderDialog: Locator;
     readonly enterItemInput: Locator;
     readonly saveButton: Locator;
@@ -20,15 +20,15 @@ export class LegalManagementPage {
     readonly addOwnershipTypeButton: Locator;
     readonly addSocialMediaButton: Locator;
     readonly addTitleButton: Locator;
-    readonly legalManagementMenu: Locator;
-    readonly legalManagementSetupMenu: Locator;
+    readonly propertyManagementMenu: Locator;
+    readonly propertyManagementSetupMenu: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.setups = page.locator("div[class='text-xs font-medium text-center']");
         this.setupItems = page.locator("td p");
         this.search = page.locator("input[placeholder*='Search']");
-        this.addCaseTypeButton = page.locator("div button");
+        this.addGenderButton = page.locator("div button");
         this.addGenderDialog = page.locator("div[class='dialog-content']");
         this.enterItemInput = page.locator("div[class='dialog-content'] input");
         this.saveButton = page.locator("div[class='dialog-content'] button").nth(1);
@@ -42,57 +42,69 @@ export class LegalManagementPage {
         this.addOwnershipTypeButton = page.locator("button span");
         this.addSocialMediaButton = page.locator("button span");
         this.addTitleButton = page.locator("button span");
-        this.legalManagementMenu = page.getByText("Legal Management", {exact: true});
-        this.legalManagementSetupMenu = page.locator("#submodules").first();
+        this.propertyManagementMenu = page.getByText("Property Management", { exact: true });
+        this.propertyManagementSetupMenu = page.locator("#submodules").first();
     }
 
     async navigateToSetupPage() {
-        await step('Navigate to legal management setup page', async () => {
-            await this.page.goto("/legal-management/setups");
+        await step('Navigate to property management setup page', async () => {
+            await this.page.goto("/property-management/setups");
         });
     }
 
-    async clickOnLegalManagementMenu() {
-        await step('Click on Legal Management menu', async () => {
-            await this.legalManagementMenu.waitFor({state: 'visible', timeout: 20000});
-            await this.legalManagementMenu.click();
+    async clickOnPropertyManagementMenu() {
+        await step('Click on Property Management menu', async () => {
+            await this.propertyManagementMenu.waitFor({ state: 'visible', timeout: 20000 });
+            await this.propertyManagementMenu.click();
         });
     }
 
-    async clickOnLegalManagementSetupMenu() {
-        await step('Click on Legal Management Setup submenu', async () => {
-            await this.legalManagementSetupMenu.click();
+    async clickOnPropertyManagementSetupMenu() {
+        await step('Click on Property Management Setup submenu', async () => {
+            await this.propertyManagementSetupMenu.click();
         });
     }
 
 
-    async clickOnCaseTypeSetup() {
-        await step('Click on Case Type setup', async () => {
+    async clickOnCustomerTypeSetup() {
+        await step('Click on Customer Type setup', async () => {
             await this.setups.nth(0).click();
         });
     }
 
-    async clickOnConsentTypeSetup() {
-        await step('Click on Consent Type setup', async () => {
+    async clickOnGenderSetup() {
+        await step('Click on Gender setup', async () => {
             await this.setups.nth(1).click();
         });
     }
 
-    async clickOnStatusTypeSetup() {
-        await step('Click on Status Type setup', async () => {
+    async clickOnNationalitySetup() {
+        await step('Click on Nationality setup', async () => {
             await this.setups.nth(2).click();
         });
     }
 
-    async clickOnCourtDivisionsSetup() {
-        await step('Click on Court Divisions setup', async () => {
+    async clickOnOwnershipTypeSetup() {
+        await step('Click on Ownership Type setup', async () => {
             await this.setups.nth(3).click();
         });
     }
 
-    async clickOnTransferTypeSetup() {
-        await step('Click on Transfer Type setup', async () => {
+    async clickOnResidentTypeSetup() {
+        await step('Click on Resident Type setup', async () => {
             await this.setups.nth(4).click();
+        });
+    }
+
+    async clickOnSocialMediaSetup() {
+        await step('Click on Social Media setup', async () => {
+            await this.setups.nth(5).click();
+        });
+    }
+
+    async clickOnTitleSetup() {
+        await step('Click on Title setup', async () => {
+            await this.setups.nth(6).click();
         });
     }
 
@@ -128,9 +140,9 @@ export class LegalManagementPage {
         });
     }
 
-    async clickOnAddCaseTypeButton() {
-        await step('Click on Add Case Type button', async () => {
-            await this.addCaseTypeButton.click();
+    async clickOnAddGenderButton() {
+        await step('Click on Add button', async () => {
+            await this.addGenderButton.click();
         });
     }
 
@@ -140,30 +152,44 @@ export class LegalManagementPage {
         });
     }
 
-    async verifyCaseTypesSetupItems() {
-        return await step('Verify Case Type setup items', async () => {
-            const expectedTypes = ['TENANCY ISSUES', 'TERMINATION ISSUES', 'DEBT RECOVERY', 'BREACH OF CONTRACT'];
+    async verifyCustomerTypesSetupItems() {
+        return await step('Verify Customer Type setup items', async () => {
+            const expectedTypes = ['COMPANY', 'INDIVIDUAL', 'JOINT-OWNERSHIP', 'MULTI-OWNERSHIP', 'PROSPECTIVE'];
             return this.verifySetupItemsExist(expectedTypes);
         });
     }
 
-    async verifyConsentTypesSetupItems() {
-        return await step('Verify Consent Type setup items', async () => {
-            const expectedTypes = ['Consent to Assign', 'Consent to Mortgage', 'Consent to Sub-Lease', 'Consent to Gift', 'Consent to Vest', 'Consent to join'];
+    async verifyNationalitiesSetupItems() {
+        return await step('Verify Nationality setup items', async () => {
+            const expectedTypes = ['AFGHANISTAN', 'ALBANIA', 'ALGERIA', 'ANDORRA', 'ANGOLA'];
             return this.verifySetupItemsExist(expectedTypes);
         });
     }
 
-    async verifyStatusTypesSetupItems() {
-        return await step('Verify Status Type setup items', async () => {
-            const expectedTypes = ['Not Started', 'In Progress', 'On Appeal', 'Re-Open', 'Closed'];
+    async verifyOwnershipTypesSetupItems() {
+        return await step('Verify Ownership Type setup items', async () => {
+            const expectedTypes = ['CENTRAL', 'DEDICATED', 'LEASED'];
             return this.verifySetupItemsExist(expectedTypes);
         });
     }
 
-    async verifyTransferTypesSetupItems() {
-        return await step('Verify Transfer Type setup items', async () => {
-            const expectedTypes = ['Full Transfer', 'Partial Transfer', 'Semi Transfer'];
+    async verifyResidentTypesSetupItems() {
+        return await step('Verify Resident Type setup items', async () => {
+            const expectedTypes = ['CITIZEN', 'NON-CITIZEN'];
+            return this.verifySetupItemsExist(expectedTypes);
+        });
+    }
+
+    async verifySocialMediaSetupItems() {
+        return await step('Verify Social Media setup items', async () => {
+            const expectedTypes = ['FACEBOOK', 'INSTAGRAM', 'LINKEDIN', 'TWITTER'];
+            return this.verifySetupItemsExist(expectedTypes);
+        });
+    }
+
+    async verifyTitlesSetupItems() {
+        return await step('Verify Title setup items', async () => {
+            const expectedTypes = ['DR', 'MR', 'MS', 'MRS'];
             return this.verifySetupItemsExist(expectedTypes);
         });
     }
@@ -174,18 +200,24 @@ export class LegalManagementPage {
         });
     }
 
+    async verifyGenderSetupItems() {
+        return await step('Verify Gender setup items', async () => {
+            const expectedTypes = ['FEMALE', 'MALE'];
+            return this.verifySetupItemsExist(expectedTypes);
+        });
+    }
 
-    async addCaseType(gender: string) {
-        await step(`Add case type: ${gender}`, async () => {
-            await this.clickOnAddCaseTypeButton();
+    async addGender(gender: string) {
+        await step(`Add gender: ${gender}`, async () => {
+            await this.clickOnAddGenderButton();
             await this.verifyAddGenderDialogDisplayed();
             await this.enterItemInput.fill(gender);
             await this.saveButton.click();
         });
     }
 
-    async editCaseType(gender: string) {
-        await step(`Edit case type to: ${gender}`, async () => {
+    async editGender(gender: string) {
+        await step(`Edit gender to: ${gender}`, async () => {
             await this.setupItemActionButton.last().click();
             await this.editButton.click();
             await this.enterItemInput.clear();
@@ -194,15 +226,15 @@ export class LegalManagementPage {
         });
     }
 
-    async deleteCaseType() {
-        await step('Delete case type', async () => {
+    async deleteGender() {
+        await step('Delete gender', async () => {
             await this.setupItemActionButton.last().click();
             await this.deleteAction.click();
             await this.deleteButton.click();
         });
     }
 
-    async addNationality(country: string) {
+    async addNationality(country: string){
         await step(`Add nationality: ${country}`, async () => {
             await this.addNationalityButton.click();
             await this.enterItemInput.fill(country);
@@ -210,7 +242,7 @@ export class LegalManagementPage {
         });
     }
 
-    async editNationality(country: string) {
+    async editNationality(country: string){
         await step(`Edit nationality to: ${country}`, async () => {
             await this.setupItemActionButton.last().click();
             await this.editButton.click();
@@ -219,7 +251,7 @@ export class LegalManagementPage {
         });
     }
 
-    async deleteNationality() {
+    async deleteNationality(){
         await step('Delete nationality', async () => {
             await this.setupItemActionButton.last().click();
             await this.deleteAction.click();
@@ -227,7 +259,7 @@ export class LegalManagementPage {
         });
     }
 
-    async addOwnershipType(ownershipType: string) {
+    async addOwnershipType(ownershipType: string){
         await step(`Add ownership type: ${ownershipType}`, async () => {
             await this.addOwnershipTypeButton.click();
             await this.enterItemInput.fill(ownershipType);
@@ -235,7 +267,7 @@ export class LegalManagementPage {
         });
     }
 
-    async editOwnershipType(ownershipType: string) {
+    async editOwnershipType(ownershipType: string){
         await step(`Edit ownership type to: ${ownershipType}`, async () => {
             await this.setupItemActionButton.last().click();
             await this.editButton.click();
@@ -244,7 +276,7 @@ export class LegalManagementPage {
         });
     }
 
-    async deleteOwnershipType() {
+    async deleteOwnershipType(){
         await step('Delete ownership type', async () => {
             await this.setupItemActionButton.last().click();
             await this.deleteAction.click();
@@ -252,7 +284,7 @@ export class LegalManagementPage {
         });
     }
 
-    async addSocialMedia(socialMedia: string) {
+    async addSocialMedia(socialMedia: string){
         await step(`Add social media: ${socialMedia}`, async () => {
             await this.addSocialMediaButton.click();
             await this.enterItemInput.fill(socialMedia);
@@ -260,7 +292,7 @@ export class LegalManagementPage {
         });
     }
 
-    async editSocialMedia(socialMedia: string) {
+    async editSocialMedia(socialMedia: string){
         await step(`Edit social media to: ${socialMedia}`, async () => {
             await this.setupItemActionButton.last().click();
             await this.editButton.click();
@@ -269,15 +301,14 @@ export class LegalManagementPage {
         });
     }
 
-    async deleteSocialMedia() {
+    async deleteSocialMedia(){
         await step('Delete social media', async () => {
             await this.setupItemActionButton.last().click();
             await this.deleteAction.click();
             await this.deleteButton.click();
         });
     }
-
-    async addTitle(title: string) {
+    async addTitle(title: string){
         await step(`Add title: ${title}`, async () => {
             await this.addTitleButton.click();
             await this.enterItemInput.fill(title);
@@ -285,7 +316,7 @@ export class LegalManagementPage {
         });
     }
 
-    async editTitle(title: string) {
+    async editTitle(title: string){
         await step(`Edit title to: ${title}`, async () => {
             await this.setupItemActionButton.last().click();
             await this.editButton.click();
@@ -294,13 +325,12 @@ export class LegalManagementPage {
         });
     }
 
-    async deleteTitle() {
+    async deleteTitle(){
         await step('Delete title', async () => {
             await this.setupItemActionButton.last().click();
             await this.deleteAction.click();
             await this.deleteButton.click();
         });
     }
-
 
 }

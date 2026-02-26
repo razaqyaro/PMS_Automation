@@ -1,4 +1,5 @@
-import {Locator, Page} from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
+import { step } from "allure-js-commons";
 
 export class AdministrationPage {
     readonly page: Page;
